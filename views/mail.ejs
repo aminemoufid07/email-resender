@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sent Emails</title>
+</head>
+<body>
+  <h1>Sent Emails (Last 2 Months)</h1>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Receiver</th>
+        <th>Subject</th>
+        <th>Content</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% emails.forEach(email => { %>
+        <tr>
+          <form action="/resend" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<%= email.id %>">
+            <td><input type="text" name="receiver" value="<%= email.receiver %>" required></td>
+            <td><input type="text" name="subject" value="<%= email.subject %>" required></td>
+            <td>
+              <textarea name="body" required><%= email.body %></textarea>
+              <input type="file" name="pdf" accept="application/pdf">
+            </td>
+            <td><button type="submit">Resend</button></td>
+          </form>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+</html>
